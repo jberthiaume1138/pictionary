@@ -36,7 +36,30 @@ var pictionary = function() {
         }
     });
 
+    var $guessBox = $('#guessBox');
+
+    var onKeyDown = function(event) {
+        if (event.keyCode == 13) { // Enter ... er this is NOT enter
+        //     return;
+        // }
+
+            var guess = $guessBox.val();
+            socket.emit('guess', guess);
+            console.log($guessBox.val());
+            $guessBox.val('');
+        }
+    };
+
+    $guessBox.on('keydown', onKeyDown);
+
+    var $guesses = $('#guessDisplay');
+    var updateGuesses = function(guess) {
+        $guesses.css("display","block");
+        $guesses.append('<p>' + guess + '</p>');
+    };
+
     socket.on('draw', draw);
+    socket.on('guess made', updateGuesses);
 };
 
 

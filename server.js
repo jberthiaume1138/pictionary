@@ -13,6 +13,10 @@ io.on('connection', function(socket) {
     socket.on('draw', function(position){
         socket.broadcast.emit('draw', position);
     });
+
+    socket.on('guess', function(guess) {
+        io.emit('guess made', guess);
+    });
 });
 
 
